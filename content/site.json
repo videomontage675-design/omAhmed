@@ -4,7 +4,7 @@
   "nameEn": "Cake Om Ahmed",
   "brandLine": "Cake Om Ahmed – ام احمد كيك",
   "tagline": "كيك أم أحمد لتلبية طلباتكم لجميع المناسبات.",
-  "url": "",
+  "url": "https://omahmed.videomontage675.workers.dev",
   "lang": "ar",
   "phone": "+967734093433",
   "phoneDisplay": "+967 734 093 433",
@@ -24,8 +24,23 @@
   "delivery": null,
   "logo": null,
   "social": [
-    { "id": "instagram", "label": "Instagram", "handle": "@cake_om_ahmed", "url": "https://www.instagram.com/cake_om_ahmed/" },
-    { "id": "tiktok", "label": "TikTok", "handle": "@cakeomahmed", "url": "https://www.tiktok.com/@cakeomahmed" },
-    { "id": "facebook", "label": "Facebook", "handle": "Cake Om Ahmed", "url": "https://www.facebook.com/profile.php?id=100063673585948" }
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "handle": "@cake_om_ahmed",
+      "url": "https://www.instagram.com/cake_om_ahmed/"
+    },
+    {
+      "id": "tiktok",
+      "label": "TikTok",
+      "handle": "@cakeomahmed",
+      "url": "https://www.tiktok.com/@cakeomahmed"
+    },
+    {
+      "id": "facebook",
+      "label": "Facebook",
+      "handle": "Cake Om Ahmed",
+      "url": "https://www.facebook.com/profile.php?id=100063673585948"
+    }
   ]
 }

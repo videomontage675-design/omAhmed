@@ -42,6 +42,9 @@ for (const p of products) {
 // Priority: custom domain in site.json → explicit SITE_URL (GitHub Pages) → Vercel production URL → local preview
 const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '';
 const rawUrl = (site.url || process.env.SITE_URL || vercelUrl || 'http://localhost:4173').replace(/\/+$/, '');
+if (rawUrl.includes('localhost') && (process.env.CI || process.env.WORKERS_CI || process.env.CF_PAGES || process.env.VERCEL)) {
+  throw new Error('Production build without a site URL: set "url" in content/site.json or the SITE_URL environment variable.');
+}
 const parsed = new URL(rawUrl);
 const origin = parsed.origin;
 const basePath = parsed.pathname.replace(/\/+$/, '');
@@ -187,5 +190,7 @@ for (const [n, s] of [['favicon-32.png', 32], ['apple-touch-icon.png', 180], ['i
   await write(n, await sharp(faviconSvg, { density: 400 }).resize(s, s).png().toBuffer());
 }
 await write('.nojekyll', '');
+// Cloudflare static-asset headers (ignored by GitHub Pages)
+await write('_headers', `/assets/css/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/js/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/img/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n/assets/og/*\n  Cache-Control: public, max-age=604800\n/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n`);
 if (site.customDomain) await write('CNAME', site.customDomain + '\n');
 log('Done →', path.relative(ROOT, DIST));

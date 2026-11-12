@@ -78,6 +78,15 @@ dist/               مجلد الإنتاج (يُنشأ تلقائيًا، غي�
 2. كل دفع إلى `main` يبني وينشر. عناوين Canonical وOpen Graph وSitemap تُبنى من عنوان GitHub Pages تلقائيًا.
 3. عند شراء دومين: ضعيه في `content/site.json` → `"url": "https://example.com"` و`"customDomain": "example.com"`، ثم اربطيه من إعدادات Pages.
 
+## النشر على Cloudflare (الاستضافة الأساسية)
+
+الموقع الأساسي: https://omahmed.videomontage675.workers.dev — مضبوط في `content/site.json` → `"url"`، لذلك تشير روابط Canonical وSitemap من أي استضافة أخرى إليه.
+- `wrangler.jsonc` يحدد مجلد `dist` وصفحة 404 الحقيقية.
+- `dist/_headers` (يُنشأ أثناء البناء) يضبط التخزين المؤقت.
+- إعدادات Workers Builds: Build command `npm run build`، Deploy command `npx wrangler deploy`.
+- عند ربط دومين خاص: غيّري `"url"` في `site.json` إلى الدومين الجديد.
+- البناء يتوقف عمدًا إن لم يُحدَّد رابط الموقع في بيئة الإنتاج، حتى لا تُنشر روابط `localhost`.
+
 ## النشر على Vercel
 
 المشروع جاهز لـ Vercel عبر `vercel.json` (أمر البناء `npm run build` ومجلد الإنتاج `dist`):
