@@ -88,21 +88,24 @@ export function orderBand() {
 
 export function socialStrip(items) {
   const { site } = ctx();
-  const offsets = ['', 'md:mt-16', 'md:mt-6', 'md:mt-24', 'md:mt-2'];
+  // Mobile/tablet: static staggered grid (no horizontal scroll, no snap) — desktop: 5-up editorial row.
+  const offsets = ['', 'mt-10 md:mt-16', 'md:mt-6', 'mt-10 md:mt-24', 'md:mt-2'];
   return html`
   <section aria-labelledby="latest" class="wrap mt-28">
     <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
       ${sectionHead({ eyebrow: 'من حساباتنا', title: 'تابعوا أحدث أعمالنا', id: 'latest', lead: 'ننشر أعمالنا الجديدة أولًا بأول على حساباتنا في إنستغرام وتيك توك وفيسبوك.' })}
-      <ul class="reveal flex flex-wrap gap-2" style="--i:1">
-        ${site.social.map((s) => html`<li><a href="${s.url}" target="_blank" rel="noopener me" class="btn btn-ghost !min-h-11 !px-4 !text-sm">${icon[s.id]}<span>${s.label}</span></a></li>`)}
+      <ul class="reveal grid grid-cols-3 gap-2 sm:flex sm:flex-wrap" style="--i:1">
+        ${site.social.map((s) => html`<li><a href="${s.url}" target="_blank" rel="noopener me" class="btn btn-ghost w-full !min-h-11 !gap-1.5 !px-2 !text-[0.8rem] sm:!gap-2 sm:!px-4 sm:!text-sm [&_svg]:shrink-0 max-[359px]:[&_svg]:hidden" aria-label="${s.label} — ${esc(s.handle)}">${icon[s.id]}<span>${s.label}</span></a></li>`)}
       </ul>
     </div>
-    <div class="-mx-5 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 md:mx-0 md:grid md:grid-cols-5 md:gap-5 md:overflow-visible md:px-0">
-      ${items.map((g, i) => html`<a href="${largeSrc(g.file)}" data-lightbox data-alt="${esc(g.alt)}" data-caption="${esc(g.caption || '')}" class="reveal zoom block w-[62vw] shrink-0 snap-start sm:w-[40vw] md:w-auto ${offsets[i % offsets.length]}" style="--i:${i}">
-        <div class="${i % 2 ? 'rounded-[1.25rem]' : 'arch-sm'} aspect-[3/4] overflow-hidden bg-cream-deep">${img(g.file, { alt: g.alt, sizes: '(min-width: 768px) 20vw, 60vw', cls: 'h-full w-full object-cover', max: 800 })}</div>
-        <span class="sr-only">تكبير الصورة</span>
-      </a>`)}
-    </div>
+    <ul class="mt-10 grid grid-cols-2 gap-x-4 gap-y-4 sm:gap-x-5 md:mt-12 md:grid-cols-5 md:gap-5">
+      ${items.map((g, i) => html`<li class="${offsets[i % offsets.length]} ${i === 4 ? 'hidden md:block' : ''}">
+        <a href="${largeSrc(g.file)}" data-lightbox data-alt="${esc(g.alt)}" data-caption="${esc(g.caption || '')}" class="reveal zoom block" style="--i:${i % 2}">
+          <span class="block ${i % 2 ? 'rounded-[1.25rem]' : 'arch-sm'} aspect-[3/4] overflow-hidden bg-cream-deep">${img(g.file, { alt: g.alt, sizes: '(min-width: 768px) 20vw, 46vw', cls: 'h-full w-full object-cover', max: 800 })}</span>
+          <span class="sr-only">تكبير الصورة</span>
+        </a>
+      </li>`)}
+    </ul>
   </section>`;
 }
 

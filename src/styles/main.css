@@ -103,7 +103,10 @@
 
   /* Image hover – slow, subtle */
   .zoom img { transition: transform 1.1s var(--ease-out-soft); }
-  .zoom:hover img, .zoom:focus-visible img { transform: scale(1.035); }
+  @media (hover: hover) and (pointer: fine) {
+    .zoom:hover img { transform: scale(1.035); }
+  }
+  .zoom:focus-visible img { transform: scale(1.035); }
 
   .prose-ar p + p { margin-top: 1rem; }
 }
