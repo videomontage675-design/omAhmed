@@ -39,7 +39,9 @@ for (const p of products) {
 }
 
 /* ── URL / base path ── */
-const rawUrl = (site.url || process.env.SITE_URL || 'http://localhost:4173').replace(/\/+$/, '');
+// Priority: custom domain in site.json → explicit SITE_URL (GitHub Pages) → Vercel production URL → local preview
+const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '';
+const rawUrl = (site.url || process.env.SITE_URL || vercelUrl || 'http://localhost:4173').replace(/\/+$/, '');
 const parsed = new URL(rawUrl);
 const origin = parsed.origin;
 const basePath = parsed.pathname.replace(/\/+$/, '');

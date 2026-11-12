@@ -78,6 +78,17 @@ dist/               مجلد الإنتاج (يُنشأ تلقائيًا، غي�
 2. كل دفع إلى `main` يبني وينشر. عناوين Canonical وOpen Graph وSitemap تُبنى من عنوان GitHub Pages تلقائيًا.
 3. عند شراء دومين: ضعيه في `content/site.json` → `"url": "https://example.com"` و`"customDomain": "example.com"`، ثم اربطيه من إعدادات Pages.
 
+## النشر على Vercel
+
+المشروع جاهز لـ Vercel عبر `vercel.json` (أمر البناء `npm run build` ومجلد الإنتاج `dist`):
+1. من [vercel.com/new](https://vercel.com/new) اختاري **Import** للمستودع `videomontage675-design/omAhmed`.
+2. اتركي الإعدادات كما هي (Framework: Other) ثم **Deploy**.
+3. كل دفع إلى `main` يُنشر تلقائيًا، وكل فرع آخر يحصل على رابط معاينة.
+
+روابط Canonical وSitemap تُبنى تلقائيًا من دومين Vercel الأساسي. عند ربط دومين خاص ضعيه في `content/site.json` → `"url"`.
+
+**تنبيه SEO:** لا تُبقي الموقع منشورًا على GitHub Pages وVercel معًا دون دومين موحّد في `site.json`، حتى لا تظهر نسختان مكررتان في البحث. بعد اعتماد Vercel يمكن تعطيل GitHub Pages.
+
 ## ⚠️ قبل الإطلاق — معلومات تنتظر التأكيد
 
 لم يُنشر أي شيء غير مؤكد. هذه البيانات **محجوبة** حتى تأكيدها:
