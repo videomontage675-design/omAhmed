@@ -82,7 +82,7 @@ export function home() {
     <div class="relative lg:col-span-6 xl:col-span-6">
       <div class="relative mx-auto w-[82%] max-w-md lg:me-0 lg:ms-auto">
         <div class="hero-unveil arch aspect-[4/5] bg-cream-deep">
-          ${img('ivory-three-tier-ruffle-cake', { alt: 'تورتة عاجية بثلاث طبقات تلتف حولها كشكشة بيضاء شفافة — من أعمال كيك أم أحمد', sizes: heroSizes, cls: 'h-full w-full object-cover', priority: true })}
+          ${img('caramel-teddy-bear-cake', { alt: 'تورتة بطبقتين أبيض وكراميل يعلوها مجسم دبدوب — من أعمال كيك أم أحمد', sizes: heroSizes, cls: 'h-full w-full object-cover', priority: true })}
         </div>
         <div class="hero-rise absolute -bottom-8 -start-10 w-[44%] sm:-start-16" style="--i:5">
           <div class="aspect-square overflow-hidden rounded-full bg-cream-deep ring-[6px] ring-cream">
@@ -90,7 +90,6 @@ export function home() {
           </div>
         </div>
         <div class="hero-rise absolute -end-3 top-10 hidden sm:block" style="--i:6">${rosette('size-12 text-caramel')}</div>
-        <p class="latin hero-rise absolute -end-8 bottom-24 hidden origin-bottom-right rotate-90 text-sm text-caramel-ink xl:block" lang="en" dir="ltr" style="--i:7">Cake Om Ahmed — Taiz</p>
       </div>
     </div>
   </div>
@@ -142,9 +141,9 @@ ${ctaPanel()}
     path: '/',
     title: `${site.name} | كيك وتورتات لجميع المناسبات في ${site.city}`,
     description: `${site.name} في ${site.city}: تورتات أعياد ميلاد وكيك مناسبات وتصاميم أطفال وتصاميم مخصصة حسب الطلب. تصفحوا الأعمال واطلبوا مباشرة عبر واتساب.`,
-    ogAlt: 'تورتة عاجية بثلاث طبقات من أعمال كيك أم أحمد',
+    ogAlt: 'تورتة الدبدوب بالكراميل من أعمال كيك أم أحمد',
     body,
-    preload: [heroPreload('ivory-three-tier-ruffle-cake', heroSizes)],
+    preload: [heroPreload('caramel-teddy-bear-cake', heroSizes)],
     jsonld: [businessLd(), websiteLd()],
   });
 }

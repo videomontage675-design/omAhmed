@@ -132,6 +132,10 @@
 .site-header.is-scrolled { background: rgb(247 242 234 / .92); backdrop-filter: blur(10px); box-shadow: 0 1px 0 rgb(74 45 37 / .08); }
 
 /* Mobile menu */
+.icon-close { display: none; }
+.menu-open .icon-close { display: block; }
+.menu-open .icon-open { display: none; }
+.menu-open .site-header { background: transparent; box-shadow: none; backdrop-filter: none; }
 .menu-panel { visibility: hidden; opacity: 0; transition: opacity .35s var(--ease-cream), visibility 0s linear .35s; }
 .menu-open .menu-panel { visibility: visible; opacity: 1; transition: opacity .35s var(--ease-cream); }
 .menu-panel li { opacity: 0; transform: translateY(10px); transition: opacity .4s var(--ease-out-soft), transform .5s var(--ease-out-soft); }

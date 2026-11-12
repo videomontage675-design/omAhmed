@@ -88,7 +88,7 @@ await Promise.all(files.map(async (f) => {
   })());
   await Promise.all(jobs);
 }));
-await fs.copyFile(path.join(DIST, 'assets/og/ivory-three-tier-ruffle-cake.jpg'), path.join(DIST, 'assets/og/default.jpg'));
+await fs.copyFile(path.join(DIST, 'assets/og/caramel-teddy-bear-cake.jpg'), path.join(DIST, 'assets/og/default.jpg'));
 for (const p of products) for (const im of p.images) if (!images[im.file]) throw new Error(`Missing image ${im.file} for ${p.slug}`);
 log(`Images: ${Object.keys(images).length} sources processed`);
 
@@ -144,7 +144,7 @@ const page = async (route, htmlStr, sitemapInfo) => {
   if (sitemapInfo) pages.push({ route, ...sitemapInfo });
 };
 
-await page('/', P.home(), { priority: '1.0', images: ['ivory-three-tier-ruffle-cake'] });
+await page('/', P.home(), { priority: '1.0', images: ['caramel-teddy-bear-cake'] });
 await page('/cakes/', P.catalog(), { priority: '0.9' });
 for (const c of categories) {
   const imgs = products.filter((p) => p.categories.includes(c.slug)).map((p) => p.images[0].file);

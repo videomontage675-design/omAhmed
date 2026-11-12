@@ -30,12 +30,12 @@ function header(path) {
       <a href="${waGeneral()}" class="btn btn-wa hidden !min-h-11 !px-5 !text-sm sm:inline-flex" target="_blank" rel="noopener">${icon.wa}<span>اطلبوا عبر واتساب</span></a>
       <button type="button" data-menu-toggle aria-controls="menu-panel" aria-expanded="false" aria-label="فتح القائمة" class="relative z-[60] grid size-11 place-items-center rounded-full text-cocoa hover:bg-cocoa/5 lg:hidden">
         <span class="sr-only">القائمة</span>
-        <svg aria-hidden="true" viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="1.5"><path class="menu-line" d="M4 8h16M8 16h12"/></svg>
+        <svg aria-hidden="true" viewBox="0 0 24 24" class="icon-open size-6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 8h16M8 16h12"/></svg><svg aria-hidden="true" viewBox="0 0 24 24" class="icon-close size-6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6 6 18"/></svg>
       </button>
     </div>
   </div>
 </header>
-<div id="menu-panel" class="menu-panel fixed inset-0 z-[55] flex flex-col bg-cream lg:hidden">
+<div id="menu-panel" class="menu-panel fixed inset-0 z-[45] flex flex-col bg-cream lg:hidden">
   <div class="scallop mt-[4.5rem]"></div>
   <nav aria-label="قائمة الجوال" class="wrap flex flex-1 flex-col justify-between pb-10 pt-8">
     <ul class="space-y-1">
