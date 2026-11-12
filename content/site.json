@@ -1,0 +1,31 @@
+{
+  "_note": "بيانات النشاط. لا تضيفي معلومة غير مؤكدة. الحقول ذات confirmed=false لا تُنشر في الموقع ولا في البيانات المنظمة.",
+  "name": "كيك أم أحمد",
+  "nameEn": "Cake Om Ahmed",
+  "brandLine": "Cake Om Ahmed – ام احمد كيك",
+  "tagline": "كيك أم أحمد لتلبية طلباتكم لجميع المناسبات.",
+  "url": "",
+  "lang": "ar",
+  "phone": "+967734093433",
+  "phoneDisplay": "+967 734 093 433",
+  "whatsapp": "967734093433",
+  "city": "تعز",
+  "cityEn": "Taiz",
+  "region": "محافظة تعز",
+  "country": "YE",
+  "address": {
+    "confirmed": false,
+    "street": "المسبح، النادي السياحي، جوار كوافير المستقبل",
+    "_conflict": "ورد سابقًا «شارع جمال». يجب حسم العنوان قبل تغيير confirmed إلى true.",
+    "mapUrl": "",
+    "acceptsVisitors": null
+  },
+  "hours": null,
+  "delivery": null,
+  "logo": null,
+  "social": [
+    { "id": "instagram", "label": "Instagram", "handle": "@cake_om_ahmed", "url": "https://www.instagram.com/cake_om_ahmed/" },
+    { "id": "tiktok", "label": "TikTok", "handle": "@cakeomahmed", "url": "https://www.tiktok.com/@cakeomahmed" },
+    { "id": "facebook", "label": "Facebook", "handle": "Cake Om Ahmed", "url": "https://www.facebook.com/profile.php?id=100063673585948" }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "file": "chocolate-hearts-tiered-cake",
+    "product": "chocolate-hearts-tiered-cake",
+    "home": true
+  },
+  {
+    "file": "caramel-teddy-bear-cake",
+    "product": "caramel-teddy-bear-cake",
+    "home": false
+  },
+  {
+    "file": "red-roses-pearl-cake",
+    "product": "red-roses-pearl-cake",
+    "home": true
+  },
+  {
+    "file": "ivory-three-tier-ruffle-cake",
+    "product": "ivory-three-tier-ruffle-cake",
+    "home": false
+  },
+  {
+    "file": "teddy-bear-stars-cake",
+    "product": "teddy-bear-stars-cake",
+    "home": true
+  },
+  {
+    "file": "white-floral-ruffle-sheet-cake",
+    "product": "white-floral-ruffle-sheet-cake",
+    "home": true
+  },
+  {
+    "file": "brown-blossom-monogram-cake",
+    "product": "brown-blossom-monogram-cake",
+    "home": true
+  },
+  {
+    "file": "red-roses-pearl-cake-detail",
+    "product": "red-roses-pearl-cake",
+    "home": false
+  }
+]
