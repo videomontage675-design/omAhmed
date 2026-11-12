@@ -109,6 +109,7 @@ export function layout(page) {
 <meta name="description" content="${esc(page.description)}">
 ${page.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="canonical" href="${canonical}">`}
 <meta name="theme-color" content="#f7f2ea">
+${C.site.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(C.site.googleSiteVerification)}">` : ''}
 <meta property="og:type" content="${page.ogType || 'website'}">
 <meta property="og:locale" content="ar_YE">
 <meta property="og:site_name" content="${esc(C.site.name)}">
