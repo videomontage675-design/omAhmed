@@ -55,7 +55,7 @@ await fs.mkdir(DIST, { recursive: true });
 
 /* ── Images ── */
 const SRC_IMG = r('src/images/works');
-const WIDTHS = [400, 640, 960, 1280, 1600];
+const WIDTHS = [400, 560, 720, 960, 1280, 1600];
 const images = {};
 await fs.mkdir(CACHE, { recursive: true });
 const files = (await fs.readdir(SRC_IMG)).filter((f) => /\.(jpe?g|png|webp)$/i.test(f));
@@ -166,13 +166,24 @@ await page('/404.html', P.notFound(), null);
 log(`Pages: ${pages.length + 1}`);
 
 /* ── sitemap.xml / robots.txt / manifest / icons ── */
+// lastmod = date of the last commit that touched what the page is built from (falls back to today)
+const gitDate = (paths) => {
+  try { return execFileSync('git', ['log', '-1', '--format=%cs', '--', ...paths], { cwd: ROOT, encoding: 'utf8' }).trim() || null; } catch { return null; }
+};
 const today = new Date().toISOString().slice(0, 10);
+const SHARED = ['scripts/templates', 'src/styles', 'content/site.json', 'content/categories.json'];
+const lastmodFor = (p) => {
+  if (p.route.startsWith('/designs/')) return gitDate([...SHARED, 'content/products.json', ...(p.images || []).map((n) => `src/images/works/${n}.jpg`)]);
+  if (p.route === '/faq/') return gitDate([...SHARED, 'content/faq.json']);
+  if (p.route === '/gallery/') return gitDate([...SHARED, 'content/gallery.json', 'src/images/works']);
+  return gitDate([...SHARED, 'content/products.json']);
+};
 const imgUrl = (n) => abs(`/assets/img/${n}-${images[n].widths.at(-1)}.jpg`);
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${pages.map((p) => `  <url>
     <loc>${abs(p.route)}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${lastmodFor(p) || today}</lastmod>
 ${(p.images || []).map((n) => `    <image:image><image:loc>${imgUrl(n)}</image:loc></image:image>`).join('\n')}
   </url>`).join('\n')}
 </urlset>

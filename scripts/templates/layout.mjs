@@ -20,7 +20,7 @@ function header(path) {
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:right-3 focus:z-[70] focus:rounded-full focus:bg-cocoa focus:px-5 focus:py-3 focus:text-cream">تخطَّ إلى المحتوى</a>
 <header class="site-header fixed inset-x-0 top-0 z-50">
   <div class="wrap flex h-[4.5rem] items-center justify-between gap-6">
-    <a href="${u('/')}" class="relative z-[60] -my-2 py-2" aria-label="كيك أم أحمد — الصفحة الرئيسية">${wordmark()}</a>
+    <a href="${u('/')}" class="relative z-[60] -my-2 py-2" rel="home">${wordmark()}<span class="sr-only"> — الصفحة الرئيسية</span></a>
     <nav aria-label="القائمة الرئيسية" class="hidden lg:block">
       <ul class="flex items-center gap-8 text-[0.95rem]">
         ${NAV.map((n) => html`<li><a href="${u(n.href)}" class="link-u py-2 ${isActive(n.href) ? 'text-cocoa font-medium' : 'text-cocoa-soft hover:text-cocoa'}"${isActive(n.href) ? ' aria-current="page"' : ''}>${n.label}</a></li>`)}
@@ -107,7 +107,7 @@ export function layout(page) {
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
-${page.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="canonical" href="${canonical}">`}
+${page.noindex ? '<meta name="robots" content="noindex, follow">' : `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">\n<link rel="canonical" href="${canonical}">`}
 <meta name="theme-color" content="#f7f2ea">
 ${C.site.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(C.site.googleSiteVerification)}">` : ''}
 <meta property="og:type" content="${page.ogType || 'website'}">

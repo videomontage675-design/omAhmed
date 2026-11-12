@@ -8,7 +8,7 @@ export const sectionHead = ({ num, eyebrow, title, lead = '', id = '', align = '
   </div>`;
 
 /** Editorial product tile. variant: 'arch' | 'tall' | 'square' | 'wide' */
-export function productTile(p, { variant = 'tall', sizes = '(min-width: 1024px) 33vw, 90vw', i = 0, headingLevel = 3 } = {}) {
+export function productTile(p, { variant = 'tall', sizes = '(min-width: 1024px) 33vw, 90vw', i = 0, headingLevel = 3, priority = false } = {}) {
   const price = priceLabel(p.price);
   const frame = {
     arch: 'arch aspect-[4/5]',
@@ -21,7 +21,7 @@ export function productTile(p, { variant = 'tall', sizes = '(min-width: 1024px) 
   <article class="reveal group relative" style="--i:${i}">
     <a href="${u(`/designs/${p.slug}/`)}" class="zoom block" aria-labelledby="t-${p.slug}-${i}">
       <div class="${frame} overflow-hidden bg-cream-deep">
-        ${img(p.images[0].file, { alt: p.images[0].alt, sizes, cls: 'h-full w-full object-cover' })}
+        ${img(p.images[0].file, { alt: p.images[0].alt, sizes, cls: 'h-full w-full object-cover', priority })}
       </div>
       <div class="mt-4 flex items-start justify-between gap-4">
         <div>
@@ -35,7 +35,7 @@ export function productTile(p, { variant = 'tall', sizes = '(min-width: 1024px) 
 }
 
 /** Varied editorial grid — breaks the "identical cards" pattern with a repeating rhythm. */
-export function editorialGrid(products, { headingLevel = 3 } = {}) {
+export function editorialGrid(products, { headingLevel = 3, priorityFirst = false } = {}) {
   const pattern = [
     { col: 'md:col-span-7', variant: 'arch', extra: '', sizes: '(min-width: 768px) 55vw, 90vw' },
     { col: 'md:col-span-5', variant: 'tall', extra: 'md:mt-32', sizes: '(min-width: 768px) 40vw, 90vw' },
@@ -45,7 +45,7 @@ export function editorialGrid(products, { headingLevel = 3 } = {}) {
   return html`<div class="grid gap-x-10 gap-y-14 md:grid-cols-12">
     ${products.map((p, i) => {
       const s = pattern[i % pattern.length];
-      return `<div class="${s.col} ${s.extra}">${productTile(p, { variant: s.variant, sizes: s.sizes, i: i % 3, headingLevel })}</div>`;
+      return `<div class="${s.col} ${s.extra}">${productTile(p, { variant: s.variant, sizes: s.sizes, i: i % 3, headingLevel, priority: priorityFirst && i === 0 })}</div>`;
     })}
   </div>`;
 }
@@ -108,6 +108,8 @@ export function socialStrip(items) {
     </ul>
   </section>`;
 }
+
+export function orderStepsLight() { return orderSteps({ dark: false }); }
 
 export const ornamentRule = () => html`<div class="flex items-center gap-4" aria-hidden="true"><span class="h-px flex-1 bg-cocoa/15"></span>${rosette('size-7 text-caramel')}<span class="h-px flex-1 bg-cocoa/15"></span></div>`;
 

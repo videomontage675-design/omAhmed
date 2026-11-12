@@ -126,9 +126,11 @@
 
 /* Hero intro — plays once on load, CSS only */
 @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
-@keyframes unveil { from { clip-path: inset(100% 0 0 0 round 999px 999px 1.25rem 1.25rem); } to { clip-path: inset(0 0 0 0 round 999px 999px 1.25rem 1.25rem); } }
+/* GPU-composited (transform only) so it never delays LCP or blocks the main thread */
+@keyframes settle { from { transform: scale(1.08) translateY(2%); } to { transform: none; } }
 .hero-rise { animation: rise .9s var(--ease-out-soft) both; animation-delay: calc(var(--i, 0) * 110ms + 80ms); }
-.hero-unveil { animation: unveil 1.3s var(--ease-out-soft) both; }
+.hero-unveil { overflow: hidden; }
+.hero-unveil img { animation: settle 1.6s var(--ease-out-soft) both; }
 
 /* Header */
 .site-header { transition: background-color .4s var(--ease-cream), box-shadow .4s var(--ease-cream); }

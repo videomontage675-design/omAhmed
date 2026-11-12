@@ -1,6 +1,6 @@
 import { html, esc, u, abs, img, priceLabel, icon, rosette, ctx, waProduct, waCustom, waGeneral, largeSrc } from './lib.mjs';
 import { layout, breadcrumbs, breadcrumbLd } from './layout.mjs';
-import { sectionHead, productTile, editorialGrid, orderBand, orderSteps, socialStrip, ornamentRule, ctaPanel } from './components.mjs';
+import { sectionHead, productTile, editorialGrid, orderBand, orderSteps, orderStepsLight, socialStrip, ornamentRule, ctaPanel } from './components.mjs';
 
 const HOME = { name: 'الرئيسية', path: '/' };
 const CAKES = { name: 'الكيك والتورتات', path: '/cakes/' };
@@ -22,7 +22,15 @@ export function businessLd() {
     image: [abs('/assets/og/default.jpg')],
     sameAs: site.social.map((s) => s.url),
     address,
-    areaServed: { '@type': 'City', name: site.cityEn },
+    areaServed: { '@type': 'City', name: site.cityEn, alternateName: site.city },
+    contactPoint: { '@type': 'ContactPoint', telephone: site.phone, contactType: 'customer service', availableLanguage: ['ar'] },
+    knowsAbout: ['كيك', 'تورتات', 'تورتات أعياد الميلاد', 'كيك المناسبات والأعراس', 'كيك الأطفال', 'كيك حسب الطلب'],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'الكيك والتورتات',
+      url: abs('/cakes/'),
+      itemListElement: ctx().categories.map((c) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: c.name, description: c.description, url: abs(`/cakes/${c.slug}/`), areaServed: { '@type': 'City', name: site.cityEn } } })),
+    },
   };
   if (site.logo) ld.logo = abs(site.logo);
   if (site.address?.confirmed && site.address.mapUrl) ld.hasMap = site.address.mapUrl;
@@ -51,6 +59,15 @@ function productLd(p) {
     },
   };
 }
+
+const collectionLd = (path, name, description, items) => ({
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name, description, url: abs(path), inLanguage: 'ar',
+  isPartOf: { '@id': abs('/#website') },
+  about: { '@id': abs('/#business') },
+  mainEntity: { '@type': 'ItemList', numberOfItems: items.length, itemListElement: items.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: abs(`/designs/${p.slug}/`), name: p.name })) },
+});
 
 const heroPreload = (name, sizes) => {
   const m = ctx().images[name];
@@ -131,6 +148,16 @@ export function home() {
   </ul>
 </section>
 
+<section class="wrap mt-28" aria-labelledby="local">
+  <div class="reveal grid gap-8 rounded-[2rem] bg-paper p-8 ring-1 ring-cocoa/10 md:grid-cols-12 md:p-12">
+    <div class="md:col-span-4">${rosette('size-9 text-caramel')}<h2 id="local" class="mt-4 text-3xl">كيك وتورتات حسب الطلب في ${esc(site.city)}</h2></div>
+    <div class="prose-ar text-lg text-cocoa-soft md:col-span-8">
+      <p>نستقبل في ${esc(site.city)} طلبات الكيك والتورتات لمختلف المناسبات: <a class="text-cocoa underline decoration-caramel/50 underline-offset-4 transition-colors hover:decoration-cocoa" href="${u('/cakes/birthday/')}">تورتات أعياد الميلاد</a> للكبار والصغار، و<a class="text-cocoa underline decoration-caramel/50 underline-offset-4 transition-colors hover:decoration-cocoa" href="${u('/cakes/occasions/')}">كيك المناسبات</a> للخطوبة والأعراس وحفلات الاستقبال، و<a class="text-cocoa underline decoration-caramel/50 underline-offset-4 transition-colors hover:decoration-cocoa" href="${u('/cakes/kids/')}">تصاميم الأطفال</a> بالمجسمات والألوان المرحة، إضافة إلى <a class="text-cocoa underline decoration-caramel/50 underline-offset-4 transition-colors hover:decoration-cocoa" href="${u('/cakes/custom/')}">التصاميم المخصصة</a> التي ننفذها حسب فكرتكم أو صورة مرجعية.</p>
+      <p>شاهدوا نماذج حقيقية في <a class="text-cocoa underline decoration-caramel/50 underline-offset-4 transition-colors hover:decoration-cocoa" href="${u('/gallery/')}">معرض الأعمال</a>، واطّلعوا على <a class="text-cocoa underline decoration-caramel/50 underline-offset-4 transition-colors hover:decoration-cocoa" href="${u('/faq/')}">الأسئلة الشائعة</a> عن الطلب والأسعار، ثم راسلونا عبر واتساب على <a class="inline-block whitespace-nowrap text-cocoa underline decoration-caramel/50 underline-offset-4 hover:decoration-cocoa" href="tel:${site.phone}" dir="ltr">${site.phoneDisplay}</a>.</p>
+    </div>
+  </div>
+</section>
+
 ${orderBand()}
 
 ${socialStrip(gallery.filter((g) => g.home).slice(0, 5))}
@@ -140,7 +167,7 @@ ${ctaPanel()}
   return layout({
     path: '/',
     title: `${site.name} | كيك وتورتات لجميع المناسبات في ${site.city}`,
-    description: `${site.name} في ${site.city}: تورتات أعياد ميلاد وكيك مناسبات وتصاميم أطفال وتصاميم مخصصة حسب الطلب. تصفحوا الأعمال واطلبوا مباشرة عبر واتساب.`,
+    description: `${site.name} (${site.nameEn}) في ${site.city}: تورتات أعياد ميلاد، كيك مناسبات وأعراس، تصاميم أطفال وتصاميم مخصصة حسب الطلب. اطلبوا مباشرة عبر واتساب.`,
     ogAlt: 'تورتة الدبدوب بالكراميل من أعمال كيك أم أحمد',
     body,
     preload: [heroPreload('caramel-teddy-bear-cake', heroSizes)],
@@ -182,7 +209,7 @@ ${categories.map((c, ci) => {
     ${items.map((p, i) => {
       const first = i === 0;
       const col = first ? `md:col-span-6 ${flip ? 'md:order-last' : ''}` : 'md:col-span-3';
-      return `<div class="${col} ${!first && i === 2 ? 'md:mt-20' : ''}">${productTile(p, { variant: first ? 'arch' : 'tall', sizes: first ? '(min-width: 768px) 46vw, 90vw' : '(min-width: 768px) 23vw, 90vw', i })}</div>`;
+      return `<div class="${col} ${!first && i === 2 ? 'md:mt-20' : ''}">${productTile(p, { variant: first ? 'arch' : 'tall', sizes: first ? '(min-width: 768px) 46vw, 90vw' : '(min-width: 768px) 23vw, 90vw', i, priority: ci === 0 && first })}</div>`;
     })}
   </div>
 </section>`;
@@ -191,10 +218,10 @@ ${ctaPanel({ title: 'لم تجدوا التصميم المناسب؟', text: 'أ
 `;
   return layout({
     path: '/cakes/',
-    title: `الكيك والتورتات | ${site.name} – ${site.city}`,
-    description: `تصفحوا أعمال ${site.name} في ${site.city}: كيك المناسبات، تورتات أعياد الميلاد، تصاميم الأطفال، والتصاميم المخصصة حسب الطلب.`,
+    title: `كيك وتورتات في ${site.city} – كل التصاميم | ${site.name}`,
+    description: `تصفحوا أعمال ${site.name} في ${site.city}: كيك المناسبات والأعراس، تورتات أعياد الميلاد، تصاميم الأطفال، والتصاميم المخصصة حسب الطلب.`,
     body,
-    jsonld: [breadcrumbLd([HOME, CAKES])],
+    jsonld: [breadcrumbLd([HOME, CAKES]), collectionLd('/cakes/', 'الكيك والتورتات', `كل تصاميم ${site.name} في ${site.city}`, products)],
   });
 }
 
@@ -223,8 +250,16 @@ ${c.steps ? html`<section class="wrap mt-16" aria-labelledby="steps"><h2 id="ste
 </section>` : ''}
 <section class="wrap mt-20" aria-labelledby="works">
   <h2 id="works" class="mb-10 text-2xl sm:text-3xl">${c.slug === 'custom' ? 'أمثلة من تصاميم خاصة نفذناها' : `من أعمالنا في ${esc(c.name)}`}</h2>
-  ${editorialGrid(items)}
+  ${editorialGrid(items, { priorityFirst: !c.steps })}
 </section>
+${c.guide ? html`<section class="wrap mt-24" aria-labelledby="guide">
+  <div class="grid gap-8 border-t border-cocoa/15 pt-10 md:grid-cols-12">
+    <div class="md:col-span-5"><p class="eyebrow">قبل الطلب</p><h2 id="guide" class="mt-3 text-2xl sm:text-3xl">ماذا تخبروننا عند طلب ${esc(c.name)}؟</h2><p class="mt-3 text-cocoa-soft">هذه التفاصيل تساعدنا على اقتراح التصميم والحجم المناسبين وتحديد السعر بسرعة.</p></div>
+    <ul class="grid gap-3 md:col-span-7">
+      ${c.guide.map((g, i) => html`<li class="reveal flex items-start gap-3 rounded-2xl bg-paper p-4 ring-1 ring-cocoa/10" style="--i:${i}">${rosette('mt-1 size-5 shrink-0 text-caramel')}<span>${esc(g)}</span></li>`)}
+    </ul>
+  </div>
+</section>` : ''}
 <section class="wrap mt-28" aria-labelledby="more">
   ${ornamentRule()}
   <h2 id="more" class="mt-10 text-center text-2xl">تصنيفات أخرى</h2>
@@ -240,7 +275,8 @@ ${ctaPanel()}
     description: c.description,
     ogImage: items[0]?.images[0].file,
     body,
-    jsonld: [breadcrumbLd(crumbs)],
+    preload: !c.steps && items[0] ? [heroPreload(items[0].images[0].file, '(min-width: 768px) 55vw, 90vw')] : [],
+    jsonld: [breadcrumbLd(crumbs), collectionLd(`/cakes/${c.slug}/`, c.title, c.description, items)],
   });
 }
 
@@ -276,6 +312,8 @@ export function product(p) {
         ${price.note ? `<p class="mt-1 text-sm text-cocoa-soft">${price.note}</p>` : ''}
       </div>
       <div class="prose-ar hero-rise mt-8 text-lg text-cocoa-soft" style="--i:3">${p.description.map((d) => `<p>${esc(d)}</p>`)}</div>
+      ${p.details?.length ? html`<div class="mt-8"><h2 class="text-xl">تفاصيل التصميم</h2><ul class="mt-3 space-y-2 text-cocoa-soft">${p.details.map((d) => `<li class="flex items-start gap-2">${rosette('mt-1.5 size-4 shrink-0 text-caramel')}<span>${esc(d)}</span></li>`)}</ul></div>` : ''}
+      ${p.occasions?.length ? html`<p class="mt-6 text-cocoa-soft"><span class="font-medium text-cocoa">يناسب:</span> ${p.occasions.map(esc).join('، ')}</p>` : ''}
       ${p.options?.length ? html`<div class="mt-8"><h2 class="text-xl">الخيارات المتاحة</h2><ul class="mt-3 divide-y divide-cocoa/10 border-y border-cocoa/10">${p.options.map((o) => `<li class="flex justify-between gap-4 py-3"><span>${esc(o.label)}</span>${o.price ? `<span class="text-caramel-ink">${esc(o.price)}</span>` : ''}</li>`)}</ul></div>` : ''}
       <div class="hero-rise mt-10 flex flex-wrap gap-3" style="--i:4">
         <a href="${waProduct(p)}" target="_blank" rel="noopener" class="btn btn-wa flex-1 sm:flex-none">${icon.wa}<span>اطلبوا هذا التصميم عبر واتساب</span></a>
@@ -300,7 +338,7 @@ ${related.length ? html`<section class="wrap mt-28" aria-labelledby="rel">
 `;
   return layout({
     path: `/designs/${p.slug}/`,
-    title: `${p.name} | ${site.name}`,
+    title: `${p.name} | ${site.name} – ${site.city}`,
     description: `${p.summary} ${price.short} — اطلبوها من ${site.name} في ${site.city} عبر واتساب.`,
     ogImage: p.images[0].file,
     ogAlt: p.images[0].alt,
@@ -320,8 +358,9 @@ export function galleryPage() {
   ${breadcrumbs(crumbs)}
   <div class="mt-8 grid gap-8 md:grid-cols-12 md:items-end">
     <div class="md:col-span-7"><p class="eyebrow">صور أصلية من أعمالنا</p><h1 id="h1" class="mt-3 text-4xl sm:text-5xl md:text-6xl">معرض الأعمال</h1></div>
-    <p class="text-lg text-cocoa-soft md:col-span-5">اضغطوا على أي صورة لعرضها بحجم أكبر، أو انتقلوا إلى صفحة التصميم لطلبه.</p>
+    <p class="text-lg text-cocoa-soft md:col-span-5">صور حقيقية من كيك وتورتات نفذناها في ${esc(site.city)}. اضغطوا على أي صورة لعرضها بحجم أكبر، أو انتقلوا إلى صفحة التصميم لطلبه.</p>
   </div>
+  <nav aria-label="تصنيفات الأعمال" class="mt-8 flex flex-wrap gap-2">${ctx().categories.map((c) => `<a href="${u(`/cakes/${c.slug}/`)}" class="btn btn-ghost !min-h-10 !px-4 !py-2 !text-sm">${esc(c.name)}</a>`)}</nav>
 </section>
 <section class="wrap mt-14" aria-label="الصور">
   <ul class="columns-1 gap-6 sm:columns-2 lg:columns-3 [&>li]:mb-6 [&>li]:break-inside-avoid">
@@ -347,7 +386,11 @@ ${ctaPanel({ title: 'أعجبكم تصميم؟', text: 'أرسلوا لنا اس
     description: `صور أصلية من أعمال ${site.name}: تورتات بطبقات، كيك مناسبات، وتصاميم أطفال بمجسمات. شاهدوا التفاصيل واطلبوا تصميمكم عبر واتساب.`,
     ogImage: 'chocolate-hearts-tiered-cake',
     body,
-    jsonld: [breadcrumbLd(crumbs)],
+    jsonld: [breadcrumbLd(crumbs), {
+      '@context': 'https://schema.org', '@type': 'ImageGallery', name: `معرض أعمال ${site.name}`, url: abs('/gallery/'), inLanguage: 'ar',
+      about: { '@id': abs('/#business') },
+      image: gallery.map((g) => ({ '@type': 'ImageObject', contentUrl: abs(`/assets/img/${g.file}-${ctx().images[g.file].widths.at(-1)}.jpg`), caption: g.caption || g.alt, description: g.alt, creditText: site.name, creator: { '@type': 'Organization', name: site.name }, copyrightNotice: `© ${site.name}` })),
+    }],
   });
 }
 
@@ -426,6 +469,8 @@ export function contact() {
         ${Array.isArray(site.hours) && site.hours.length ? html`<div class="grid gap-1 py-5 sm:grid-cols-3"><dt class="text-cocoa-soft">أوقات العمل</dt><dd class="sm:col-span-2">${site.hoursText ? esc(site.hoursText) : ''}</dd></div>` : ''}
         ${site.delivery?.text ? html`<div class="grid gap-1 py-5 sm:grid-cols-3"><dt class="text-cocoa-soft">التوصيل</dt><dd class="sm:col-span-2">${esc(site.delivery.text)}</dd></div>` : ''}
       </dl>
+      <section class="mt-16" aria-labelledby="steps"><h2 id="steps" class="mb-8 text-2xl">كيف تطلبون؟</h2>${orderStepsLight()}</section>
+      <p class="mt-10 text-cocoa-soft">قبل الطلب: تصفحوا <a class="text-cocoa underline decoration-caramel/50 underline-offset-4 transition-colors hover:decoration-cocoa" href="${u('/cakes/')}">الكيك والتورتات</a> أو <a class="text-cocoa underline decoration-caramel/50 underline-offset-4 transition-colors hover:decoration-cocoa" href="${u('/gallery/')}">معرض الأعمال</a>، واطّلعوا على <a class="text-cocoa underline decoration-caramel/50 underline-offset-4 transition-colors hover:decoration-cocoa" href="${u('/faq/')}">الأسئلة الشائعة</a>.</p>
     </div>
     <aside class="lg:col-span-5" aria-labelledby="follow">
       <div class="rounded-[2rem] bg-cocoa p-8 text-cream sm:p-10">
