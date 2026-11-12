@@ -367,7 +367,7 @@ export function galleryPage() {
     ${gallery.map((g, i) => html`<li class="reveal" style="--i:${i % 3}">
       <figure>
         <a href="${largeSrc(g.file)}" data-lightbox data-alt="${esc(g.alt)}" data-caption="${esc(g.caption || '')}" class="zoom block overflow-hidden ${i % 4 === 0 ? 'arch' : 'rounded-[1.25rem]'} bg-cream-deep">
-          ${img(g.file, { alt: g.alt, sizes: '(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw', cls: 'w-full h-auto' })}
+          ${img(g.file, { alt: g.alt, sizes: '(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw', cls: 'w-full h-auto', priority: i === 0 })}
           <span class="sr-only">تكبير الصورة</span>
         </a>
         <figcaption class="mt-3 flex items-center justify-between gap-3 text-sm">
